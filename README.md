@@ -21,3 +21,5 @@ print(keksik_api.balance())
  > Реализовать прием callback
 # Поддержать автора монеткой
  4890 4947 7180 1784
+# Связь с автором
+[ВК](https://vk.com/frinyacode)
