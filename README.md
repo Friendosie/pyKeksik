@@ -5,7 +5,8 @@
 обновлять буду постоянно
 
 # Примеры кода
-```from pyKeksik import KeksikApi
+```python
+from pyKeksik import KeksikApi
 keksik_api = KeksikApi(group_id, apikey)
 # Список донатов
 print(keksik_api.donates.get())
