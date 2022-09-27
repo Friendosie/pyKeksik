@@ -5,7 +5,7 @@
 обновлять буду постоянно
 
 # Примеры кода
-<from pyKeksik import KeksikApi
+```from pyKeksik import KeksikApi
 keksik_api = KeksikApi(group_id, apikey)
 # Список донатов
 print(keksik_api.donates.get())
@@ -15,6 +15,6 @@ print(keksik_api.campaigns.get())
 print(keksik_api.payments.get())
 # Баланс
 print(keksik_api.balance())
->
+```
 # Поддержать автора монеткой
  4890 4947 7180 1784
