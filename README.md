@@ -19,4 +19,3 @@ print(keksik_api.balance())
 ```
 # В планах:
  > Реализовать прием callback
-
