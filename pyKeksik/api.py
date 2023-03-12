@@ -2,8 +2,14 @@ from types import SimpleNamespace
 import requests
 import json
 
-def sendRequestToApi(session, post_args, link):
-    post_data = json.loads(session.post(link, headers={'Content-Type': 'application/json'}, json=post_args).text, object_hook=lambda d: SimpleNamespace(**d))
+def sendRequestToApi(session, post_args, method):
+    """Отправляет POST запрос с указанными параметрами"""
+    post_data = json.loads(
+        session.post("https://api.keksik.io/"+method,
+        headers={'Content-Type': 'application/json'},
+        json=post_args).text,
+        object_hook=lambda d: SimpleNamespace(**d)
+        )
     
     if post_data.success:
         return post_data.list
@@ -11,7 +17,6 @@ def sendRequestToApi(session, post_args, link):
         raise Exception(post_data.error, post_data.msg)
 
 class KeksikApi:
-
     def __init__(self,
                 group_id=None,
                 token=None,
@@ -60,7 +65,7 @@ class KeksikApi:
                 'sort':sort,
                 'reverse':reverse
                 }
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/donates/get')
+            return sendRequestToApi(self.Session, post_args, 'donates/get')
         
         def getLast(self, last=None):
             post_args = {
@@ -70,7 +75,7 @@ class KeksikApi:
                 'last':last
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/donates/get-last')
+            return sendRequestToApi(self.Session, post_args, 'donates/get-last')
         
         def changeStatus(self, id, status):
             post_args = {
@@ -81,7 +86,7 @@ class KeksikApi:
                 'status':status
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/donates/change-status')
+            return sendRequestToApi(self.Session, post_args, 'donates/change-status')
         
         def answer(self, id, answer):
             post_args = {
@@ -92,7 +97,7 @@ class KeksikApi:
                 'answer':answer
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/donates/change-status')
+            return sendRequestToApi(self.Session, post_args, 'donates/change-status')
         
         def changeRewardStatus(self, id, status):
             post_args = {
@@ -103,7 +108,7 @@ class KeksikApi:
                 'status':status
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/donates/change-status')
+            return sendRequestToApi(self.Session, post_args, 'donates/change-status')
     
     class campaigns:
 
@@ -126,7 +131,7 @@ class KeksikApi:
                 'ids':ids
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/campaigns/get')
+            return sendRequestToApi(self.Session, post_args, 'campaigns/get')
         
         def getActive(self):
             post_args = {
@@ -135,7 +140,7 @@ class KeksikApi:
                 'v':self.v
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/campaigns/get-active')
+            return sendRequestToApi(self.Session, post_args, 'campaigns/get-active')
         
         def getRewards(self, campaign):
             post_args = {
@@ -145,7 +150,7 @@ class KeksikApi:
                 'campaign':campaign
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/campaigns/get-rewards')
+            return sendRequestToApi(self.Session, post_args, 'campaigns/get-rewards')
         
         def change(self,
             id,
@@ -169,7 +174,7 @@ class KeksikApi:
                 'start_backers':start_backers
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/campaigns/change')
+            return sendRequestToApi(self.Session, post_args, 'campaigns/change')
         
         def changeReward(self,
             id,
@@ -191,7 +196,7 @@ class KeksikApi:
                 'status':status
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/campaigns/change-reward')
+            return sendRequestToApi(self.Session, post_args, 'campaigns/change-reward')
     
     class payments:
 
@@ -214,7 +219,7 @@ class KeksikApi:
                 'ids':ids
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/payments/get')
+            return sendRequestToApi(self.Session, post_args, 'payments/get')
         
         def create(self, 
             system,
@@ -232,7 +237,7 @@ class KeksikApi:
                 'amount':amount
                 }
 
-            return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/payments/get')
+            return sendRequestToApi(self.Session, post_args, 'payments/create')
     
     def balance(self, ):
         post_args = {
@@ -241,4 +246,4 @@ class KeksikApi:
             'v':self.v,
             }
 
-        return sendRequestToApi(self.Session, post_args, 'https://api.keksik.io/payments/get')
+        return sendRequestToApi(self.Session, post_args, 'balance')
